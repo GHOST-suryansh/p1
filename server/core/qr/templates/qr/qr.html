@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan2say</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+ <h1>say to qr</h1>
+ <div class="container">
+        <h1>QR Code Generator</h1>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="text" placeholder="Enter any words or sentences" value="{{ text }}" required>
+            <button type="submit">Generate</button>
+        </form>
+        {% if qr_image %}
+            <div class="qr-block">
+                <h3>Your QR Code:</h3>
+                <img src="data:image/png;base64,{{ qr_image }}" alt="QR Code">
+            </div>
+        {% endif %}
+    </div>
+  <br>
+    <a href="{% url 'calc' %}">
+        <button class="normal-button abnormal-button" type="button">Go to Calculator</button>
+    </a>
+
+</body>
+</html>

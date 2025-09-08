@@ -21,5 +21,6 @@ from django.urls import include, path
 
 urlpatterns = [
     path("", include("calculator.urls")),
+    path("qr/", include("qr.urls")),
     path("admin/", admin.site.urls),
 ]
