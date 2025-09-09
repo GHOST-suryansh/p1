@@ -1,33 +1,60 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scan2say</title>
-  <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
 </head>
+
 <body>
 
- <h1>say to qr</h1>
- <div class="container">
+    <h1>Say hii to QR</h1>
+    <div class="container">
         <h1>QR Code Generator</h1>
-        <form method="post">
+        <form method="post" style="margin-bottom: 20px;">
             {% csrf_token %}
             <input type="text" name="text" placeholder="Enter any words or sentences" value="{{ text }}" required>
             <button type="submit">Generate</button>
         </form>
-        {% if qr_image %}
-            <div class="qr-block">
-                <h3>Your QR Code:</h3>
-                <img src="data:image/png;base64,{{ qr_image }}" alt="QR Code">
-            </div>
-        {% endif %}
-    </div>
-  <br>
-    <a href="{% url 'calc' %}">
-        <button class="normal-button abnormal-button" type="button">Go to Calculator</button>
-    </a>
+        <form method="post" style="margin-bottom: 20px;">
+            {% csrf_token %}
+            <button type="submit" name="clear">Clear</button>
+        </form>
 
+        {% if qr_image %}
+        <div class="qr-block">
+            <h3>Your QR Code:</h3>
+            <img src="data:image/png;base64,{{ qr_image }}" alt="QR Code">
+            <button onclick="shareQR('{{ text }}')" type="button">Share</button>
+        </div>
+        {% endif %}
+        <br>
+
+        <a href="/" class="Wapas">
+            <button type="button">Go to Calculator</button>
+        </a>
 </body>
-</html>
+
+
+
+<script>
+    function shareQR(qrtext) {
+        if (navigator.share) {
+            navigator.share({
+                title: 'QR Code',
+                text: 'Scan this QR code data: ' + qrtext,
+            }).catch((e) => {
+                alert("Sharing failed: " + e);
+            });
+        } else if (navigator.clipboard) {
+            navigator.clipboard.writeText(qrtext);
+            alert("QR code data copied to clipboard!");
+        } else {
+            alert("Sharing not supported on this browser!");
+        }
+    }
+</script>
