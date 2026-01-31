@@ -1,4 +1,4 @@
- P1 – Web Apps Project
+# P1 – Web Apps Project
 
 P1 is a small web project that contains two basic web applications.  
 This repository was created to practice and understand core web development concepts.
